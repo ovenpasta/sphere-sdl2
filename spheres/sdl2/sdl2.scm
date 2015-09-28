@@ -120,6 +120,15 @@
  SDL_LASTEVENT
  )
 
+; SDL_MouseButtonEvent-button values:
+(c-define-constants
+ SDL_BUTTON_LEFT
+ SDL_BUTTON_MIDDLE
+ SDL_BUTTON_RIGHT
+ SDL_BUTTON_X1
+ SDL_BUTTON_X2
+)
+
 (c-define-constants
  SDL_GL_RED_SIZE
  SDL_GL_GREEN_SIZE
