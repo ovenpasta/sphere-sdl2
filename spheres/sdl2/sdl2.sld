@@ -916,6 +916,33 @@
    SDL_WINDOWPOS_UNDEFINED
    SDL_FALSE
    SDL_TRUE
+
+   SDL_Rect
+   SDL_Rect-x-set!
+   SDL_Rect-y-set!
+   SDL_Rect-w-set!
+   SDL_Rect-h-set!
+   alloc-SDL_Rect
+   *->SDL_Rect
+   SDL_Rect-ref
+   SDL_Rect-set!
+
+   alloc-SDL_ViewPort
+   *->SDL_Viewport
+   SDL_Viewport-ref
+   SDL_Viewport-set
+
+   alloc-SDL_Event
+
+   SDL_Event-type
+   SDL_Keysym-sym
+   SDL_KeyboardEvent-keysym
+   SDL_Event-key
+   SDL_MouseButtonEvent-button
+   SDL_Event-button
+   SDLK_q
+
+   SDL_BUTTON_LEFT
    ) ;export
 
   (include "sdl2.scm")
