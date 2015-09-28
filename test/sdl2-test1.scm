@@ -3,13 +3,27 @@
 (load (spheres/core base))
 (load (spheres/sdl2 sdl2))
 
-(SDL_Init SDL_INIT_EVERYTHING)
-(define w (SDL_CreateWindow "HELLO" SDL_WINDOWPOS_UNDEFINED SDL_WINDOWPOS_UNDEFINED 200 200 0))
-(SDL_ShowWindow w)
-(define renderer (SDL_CreateRenderer w -1 0))
-(SDL_SetRenderDrawBlendMode renderer SDL_BLENDMODE_NONE)
-(SDL_SetRenderDrawColor renderer #xf0 #xa0 #x20 #xff)
-(SDL_RenderClear renderer)
+(define window #f)
+(define renderer #f)
+
+(define (init)
+  
+  (unless (= 0 (SDL_Init SDL_INIT_VIDEO))
+    (error "SDL initialization failed."))
+
+  (set! window (SDL_CreateWindow "HELLO" SDL_WINDOWPOS_UNDEFINED SDL_WINDOWPOS_UNDEFINED 800 450 0))
+  (if (eq? #f window) 
+      (error "Window creation failed."))
+
+  (SDL_ShowWindow window)
+  
+  (set! renderer (SDL_CreateRenderer window -1 0))
+  (if (eq? #f renderer) 
+      (error "Render creation failed."))
+
+  (SDL_SetRenderDrawBlendMode renderer SDL_BLENDMODE_NONE)
+  (SDL_SetRenderDrawColor renderer #xf0 #xa0 #x20 #xff)
+  (SDL_RenderClear renderer))
 
 (define (draw-rects)
   (define viewport* (alloc-SDL_Rect))
@@ -26,8 +40,18 @@
         (SDL_RenderFillRect renderer rect*)
         (loop (+ i 10))))))
 
-(draw-rects)
-(SDL_RenderPresent renderer)
+(define (quit)
+  (SDL_DestroyWindow window)
+  (SDL_DestroyRenderer renderer)
+  (SDL_Quit))
+
+(define (main)
+  (init)
+  
+  (draw-rects)
+
+  ; Update the screen.
+  (SDL_RenderPresent renderer)
 
   (let loop ()
     (let ((e (alloc-SDL_Event)))
@@ -43,4 +67,8 @@
                   (= (SDL_MouseButtonEvent-button (SDL_Event-button e)) SDL_BUTTON_LEFT)))
 	
 	(loop))))
+  (quit))
+
+(main)
+
 
