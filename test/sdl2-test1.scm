@@ -55,18 +55,18 @@
 
   (let loop ()
     (let ((e (alloc-SDL_Event)))
-      (SDL_WaitEvent e)
-      (unless (or
-                (= (SDL_Event-type e) SDL_QUIT)
-                (and
-                  (= (SDL_Event-type e) SDL_KEYDOWN)
-                  (= (SDL_Keysym-sym (SDL_KeyboardEvent-keysym (SDL_Event-key  e)))
-		     SDLK_q))
-                (and
-                  (= (SDL_Event-type e) SDL_MOUSEBUTTONDOWN)
-                  (= (SDL_MouseButtonEvent-button (SDL_Event-button e)) SDL_BUTTON_LEFT)))
-	
-	(loop))))
+      (if (= 1 (SDL_WaitEvent e))      
+	  (unless (or
+		   (= (SDL_Event-type e) SDL_QUIT)
+		   (and
+		    (= (SDL_Event-type e) SDL_KEYDOWN)
+		    (= (SDL_Keysym-sym (SDL_KeyboardEvent-keysym (SDL_Event-key  e)))
+		       SDLK_q))
+		   (and
+		    (= (SDL_Event-type e) SDL_MOUSEBUTTONDOWN)
+		    (= (SDL_MouseButtonEvent-button (SDL_Event-button e)) SDL_BUTTON_LEFT)))
+	    
+	    (loop)))))
   (quit))
 
 (main)
